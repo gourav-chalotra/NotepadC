@@ -1,0 +1,2 @@
+# NotepadC
+Notepad using c
