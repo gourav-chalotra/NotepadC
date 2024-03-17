@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 #include <conio.h>
+#include <fstream>
+
 using namespace std;
 // File .Edit. View
 list<char> head;
@@ -22,27 +24,14 @@ void DisplayUI()
     cout << "\n\n\n"
          << endl;
 }
-// Used to print the desh board of pennal
-void DisplayUI(int indexMenu)
+void clearnHead()
 {
-    for (int i = 0; i < Menu.size(); i++)
-    {
-        if (indexMenu == i)
-            cout << Menu[i] + "*"
-                 << "\t";
-        else
-            cout << Menu[i] << "\t";
-    }
-    cout << "\n\n\n"
-         << endl;
-
-    displayingDataInputOnScreen();
-    char input;
-    input = getch();
-    indexMenu++;
-    cout << endl;
-    system("cls");
-    while (input == 9)
+    head.clear();
+}
+// Used to print the desh board of pennal
+int DisplayUI(int indexMenu)
+{
+    while (true)
     {
         for (int i = 0; i < Menu.size(); i++)
         {
@@ -55,15 +44,20 @@ void DisplayUI(int indexMenu)
         cout << "\n\n\n"
              << endl;
         displayingDataInputOnScreen();
-        indexMenu++;
-        indexMenu = indexMenu % Menu.size();
+        char input;
         input = getch();
-        if (input == 13)
+        if (input == 9)
+        {
+            indexMenu++;
+            indexMenu = indexMenu % Menu.size();
+        }
+        else if (input == 13)
         {
             break;
         }
         system("cls");
     }
+    return indexMenu;
     // Index value par ham check kera ga... konsa user na option click kiya hai
 }
 
@@ -98,7 +92,50 @@ int main()
         {
             // tab
             system("cls");
-            DisplayUI(0);
+            int operations = DisplayUI(0);
+            cout << "operations: " << operations << endl;
+            // For saving file
+            if (operations == 0)
+            {
+                string filename;
+                // validing file name is correct or not
+                while (true)
+                {
+                    cout << "Enter the file name with extenction (filename.txt): ";
+                    cin >> filename;
+                    bool Error = false;
+                    for (auto it : filename)
+                    {
+                        if (it == ' ')
+                        {
+                            Error = true;
+                            break;
+                        }
+                    }
+                    if (Error)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    system("cls");
+                }
+                string data;
+                fstream MyFile(filename);
+                for (auto k : head)
+                {
+                    data += k;
+                }
+                MyFile << data;
+                MyFile.clear();
+                clearnHead();
+            }
+            else
+            {
+                exit(0);
+            }
         }
         else if (input == 13)
         {
