@@ -104,6 +104,12 @@ int main()
                     cout << "Enter the file name with extenction (filename.txt): ";
                     cin >> filename;
                     bool Error = false;
+                    if (filename[0] >= '0' && filename[0] <= '9')
+                    {
+                        cout << "Error in file name: Name not started with number values";
+                        system("cls");
+                        continue;
+                    }
                     for (auto it : filename)
                     {
                         if (it == ' ')
@@ -114,6 +120,8 @@ int main()
                     }
                     if (Error)
                     {
+                        cout << "Space is not allow in filename\n";
+                        system("cls");
                         continue;
                     }
                     else
@@ -123,13 +131,14 @@ int main()
                     system("cls");
                 }
                 string data;
-                fstream MyFile(filename);
                 for (auto k : head)
                 {
                     data += k;
                 }
+                ofstream("C:\\Users\\goura\\OneDrive\\Desktop\\web site\\Projects\\NotepadC\\");
+                ofstream MyFile(filename);
                 MyFile << data;
-                MyFile.clear();
+                MyFile.close();
                 clearnHead();
             }
             else
